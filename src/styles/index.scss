@@ -11,3 +11,23 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+body {
+    background-color: black;
+    height: 100vh;
+}
+.counter{
+    text-align: center;
+    background-color: black;
+    padding: 5px;
+    }
+.counter div{
+    display:inline-block;
+    line-height: 60px;
+    width: auto;
+    background: #101010;
+    font-size: 60px;
+    color: white;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+}
