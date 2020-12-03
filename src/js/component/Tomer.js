@@ -1,45 +1,44 @@
 import React, { useState, useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
+import useInterval from "./useInterval";
 
 export const Tomer = props => {
 	const [counter, setCounter] = useState(0);
 	const [laps, setLaps] = useState([]);
 	const [intervalID, setIntervalID] = useState(null);
+	const [running, setRunning] = useState(true);
 	const startCounter = () => {
-		if (intervalID == null) {
-			let id = setInterval(() => {
-				setCounter(counter + 1);
-			}, 1000);
-			setIntervalID(id);
+		if (!running) {
+			setRunning(true);
 		}
 	};
 	const stopCounter = () => {
-		if (intervalID != null) {
+		if (running) {
 			clearInterval(intervalID);
 			setIntervalID(null);
+			setRunning(false);
 		}
 	};
+
+	// this way is more react, it allows to handle
+	// fresh states and fresh props
+	// useInterval(() => {
+	// 	setCounter(counter + 1);
+	// }, running ? 1000 : null);
+
+	// this way works, but wouldn't be able to
+	// access fresh props from setInterval
 	useEffect(
 		() => {
-			const interval = setInterval(() => {
-				setCounter(counter + 1);
-				// console.log("This will run every second!");
-			}, 1000);
-			setIntervalID(interval);
-			return () => clearInterval(interval);
+			if (running) {
+				let id = setInterval(() => {
+					setCounter(prevCounter => prevCounter + 1);
+				}, 1000);
+				setIntervalID(id);
+			}
+			return () => clearInterval(intervalID);
 		},
-		[counter]
-	);
-	useEffect(
-		() => {
-			const sayHi = () => {
-				console.log("hi");
-			};
-			console.log("cambio bgColor");
-			sayHi();
-			// console.log(counter % 5 == 0);
-		},
-		[counter]
+		[running]
 	);
 	return (
 		<>
