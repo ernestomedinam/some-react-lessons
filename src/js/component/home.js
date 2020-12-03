@@ -5,6 +5,7 @@ import rigoImage from "../../img/rigo-baby.jpg";
 import { Jumbotron } from "./Jumbotron";
 import { NavBar } from "./NavBar";
 import Timer from "./Timer";
+import { Tomer } from "./Tomer";
 
 //create your first component
 export class Home extends React.Component {
@@ -32,6 +33,10 @@ export class Home extends React.Component {
 		return (
 			<>
 				<Timer
+					bgColor={this.state.bgColor}
+					randomizeBg={this.getRandomBgColor}
+				/>
+				<Tomer
 					bgColor={this.state.bgColor}
 					randomizeBg={this.getRandomBgColor}
 				/>
